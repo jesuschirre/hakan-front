@@ -32,7 +32,7 @@ export default function Features() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Todo lo que{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-tr from-cyan-400 to-teal-400 bg-clip-text text-transparent">
               necesitas
             </span>{" "}
             para solicitar un técnico seguro

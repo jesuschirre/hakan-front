@@ -25,7 +25,7 @@ export default function Cta() {
             <div className="relative z-10 text-center">
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
                 Contrata un técnico{" "}
-                <span className="bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="bg-linear-to-tr from-cyan-400 to-teal-400 bg-clip-text text-transparent">
                   en minutos
                 </span>
               </h2>
