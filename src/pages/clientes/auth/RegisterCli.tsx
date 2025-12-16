@@ -1,8 +1,9 @@
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth.ts";
-
+import { useAuth } from "../../../hooks/useAuth.ts";
+import Ball from "../components/ball.tsx";
+import LoadingSp from "../../../components/LoadingSp.tsx";
 export default function RegisterCli() {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
@@ -11,8 +12,7 @@ export default function RegisterCli() {
   const [confirmPassword, setConfirmPassword] = useState<string>(""); // Confirmar contraseña
   const [identification_type_code, setTipoID] = useState<string>("");
   const [number, setNumeroID] = useState<string>("");
-  const { handleregistercli } = useAuth();
-  const { handleGoogleLogin } = useAuth();
+  const { handleregistercli, handleGoogleLogin, loading } = useAuth();
 
   // Función para redirigir al dashboard después de un registro exitoso
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,131 +21,128 @@ export default function RegisterCli() {
   };
 
   return (
-    <div className="flex w-full h-screen">
-      <div className="w-full flex items-center justify-center lg:w-1/2">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white shadow-lg rounded-2xl px-8 pt-6 pb-8 w-full max-w-2xl"
-        >
-          <h1 className="text-5xl font-semibold text-center text-gray-800 mb-6">Registrarse</h1>
-          <p className="font-medium text-lg text-gray-500 mt-4">Crea una cuenta con nosotros</p>
+    <>
+      {loading ? (<LoadingSp mensaje="Creando la cuenta"/>) : ( 
+      <div className="flex w-full h-screen">
 
-          <div className="mt-7">
+        <div className="w-full flex items-center justify-center lg:w-1/2">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-lg rounded-2xl px-6 py-6 w-full max-w-md"
+          >
+            <h1 className="text-3xl font-semibold text-center text-text">
+              Registrarse
+            </h1>
+            <p className="text-sm text-text text-center mt-2 mb-5">
+              Crea una cuenta con nosotros
+            </p>
+
             {/* Nombre */}
-            <label className="text-lg font-medium">Nombre</label>
+            <label className="text-sm font-medium">Nombre</label>
             <input
               type="text"
               placeholder="Nombre"
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent mb-4"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-3 text-sm"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
 
             {/* Email */}
-            <label className="text-lg font-medium">Email</label>
+            <label className="text-sm font-medium">Email</label>
             <input
               type="email"
               placeholder="Email"
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent mb-4"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-3 text-sm"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
 
             {/* Contraseña */}
-            <label className="text-lg font-medium">Contraseña</label>
+            <label className="text-sm font-medium">Contraseña</label>
             <input
               type="password"
               placeholder="Contraseña"
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent mb-4"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-3 text-sm"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            {/* Confirmar Contraseña */}
-            <label className="text-lg font-medium">Confirmar Contraseña</label>
+            {/* Confirmar */}
+            <label className="text-sm font-medium">Confirmar contraseña</label>
             <input
               type="password"
               placeholder="Confirmar contraseña"
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent mb-4"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-3 text-sm"
               required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
-            {/* Tipo de Identificación */}
-            <label className="text-lg font-medium">Tipo de Identificación</label>
+            {/* Tipo ID */}
+            <label className="text-sm font-medium">Tipo de identificación</label>
             <select
-              name="tipoIdentificacion"
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-3 text-sm"
               required
               value={identification_type_code}
               onChange={(e) => setTipoID(e.target.value)}
             >
-              <option value="" disabled>Selecciona un tipo de identificación</option>
-              <option value="DNI">DNI (Documento Nacional de Identidad)</option>
+              <option value="" disabled>Selecciona</option>
+              <option value="DNI">DNI</option>
               <option value="CE">Carnet de Extranjería</option>
               <option value="PAS">Pasaporte</option>
-              <option value="RUC">RUC (Registro Único de Contribuyentes)</option>
+              <option value="RUC">RUC</option>
             </select>
 
-            {/* Número de Identificación */}
-            <label htmlFor="numeroID" className="text-lg font-medium">Número de Identificación</label>
+            {/* Número ID */}
+            <label className="text-sm font-medium">Número de identificación</label>
             <input
-              id="numeroID"
               type="text"
-              placeholder="Ingresa tu número de identificación"
               maxLength={11}
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent"
+              placeholder="Número"
+              className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-4 text-sm"
               required
               value={number}
-              onChange={(e) => setNumeroID(e.target.value.replace(/[^0-9]/g, ''))} // Limpia caracteres no numéricos
+              onChange={(e) =>
+                setNumeroID(e.target.value.replace(/[^0-9]/g, ""))
+              }
             />
 
-            <div className="flex mt-5 gap-4">
-              <div className="flex">
-                <p>¿Ya tienes cuenta?</p>
-                <button
-                  type="button"
-                  onClick={() => navigate("/client/login")}
-                  className="font-medium text-base text-cyan-500 cursor-pointer ml-1"
-                >
-                  Iniciar sesión
-                </button>
-              </div>
-            </div>
+            {/* Acciones */}
+            <button
+              type="submit"
+              className="w-full bg-primary text-text rounded-xl py-2.5 text-sm font-semibold
+                        hover:bg-amber-500 transition active:scale-95"
+            >
+              Registrarse
+            </button>
 
-            <div className="mt-6 flex flex-col gap-y-4">
-              <button
-                type="submit"
-                className="active:scale-[.98] active:duration-75 transition-all font-bold w-full bg-cyan-500 rounded-xl text-white text-lg py-3 hover:scale-[1.01] ease-in-out cursor-pointer"
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="mt-3 flex items-center justify-center gap-2 w-full py-2.5
+                        border border-gray-300 rounded-xl text-sm hover:bg-gray-50"
+            >
+              <FaGoogle />
+              Crear con Google
+            </button>
+
+            <p className="text-sm text-center text-gray-500 mt-4">
+              ¿Ya tienes cuenta?
+              <span
+                onClick={() => navigate("/client/login")}
+                className="ml-1 text-primary cursor-pointer font-medium"
               >
-                Registrarse
-              </button>
-
-              <button
-                type="button"
-                onClick={handleGoogleLogin}
-                className="flex items-center justify-center gap-3 w-full py-3 border-2 border-gray-300 
-                rounded-xl font-medium text-gray-700 transition-all duration-200 hover:scale-[1.02] hover:bg-gray-50 
-                active:scale-95 shadow-sm hover:shadow-md cursor-pointer"
-              >
-                <FaGoogle />
-                Crear cuenta con Google
-              </button>
-            </div>
-
-          </div>
-        </form>
-
+                Iniciar sesión
+              </span>
+            </p>
+          </form>
+        </div>
+        <Ball/>
       </div>
-
-      <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
-        <div className="w-60 h-60 bg-linear-to-tr from-amber-500 to-cyan-500 rounded-full animate-spin" />
-        <div className="w-full h-1/2 absolute bg-white/10 bottom-0 backdrop-blur-lg" />
-      </div>
-    </div>
+    )}
+    </>
   );
 }

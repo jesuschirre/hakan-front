@@ -1,11 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
+import { AuthProvider } from "./context/auth/AuthContextClient";
 
 function App() {
   return (
-    <div className="bg-[#f1f1f1]">
+    <div>
       <BrowserRouter>
-        <AppRouter />
+        <AuthProvider>
+          <AppRouter />
+        </AuthProvider>
       </BrowserRouter>
     </div>
   )

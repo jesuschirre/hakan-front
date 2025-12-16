@@ -1,1 +1,17 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+  /* FONDO Y TEXTO */
+  --color-bg: oklch(0.94 0.01 270);        /* #ebebea */
+  --color-text: oklch(0.30 0.03 270);      /* #3b3845 */
+
+  /* ACCENTOS */
+  --color-primary: oklch(0.82 0.16 85);    /* #f6c20e */
+  --color-soft: oklch(0.88 0.10 95);       /* #ead888 */
+
+  /* GRISES */
+  --color-muted: oklch(0.63 0.02 270);     /* #8f8c91 */
+
+  /* WARNING / TIERRA */
+  --color-warning: oklch(0.45 0.12 85);    /* #785e1a */
+}

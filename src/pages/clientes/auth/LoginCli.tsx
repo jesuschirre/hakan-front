@@ -1,92 +1,93 @@
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
-import { useAuth } from "./hooks/useAuth.ts";
+import { useAuth } from "../../../hooks/useAuth";
+import Ball from "../components/ball";
+import { Link } from "react-router-dom";
+import LoadingSp from "../../../components/LoadingSp";
 
 export default function LoginCli() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { Handlelogincli } = useAuth();
-  const {handleGoogleLogin} = useAuth();
+  const { Handlelogincli, handleGoogleLogin, loading } = useAuth();
 
   return (
-    <div className="flex w-full h-screen">
-      <div className="w-full flex items-center justify-center lg:w-1/2">
-        <form
-          className="bg-white shadow-lg rounded-2xl px-8 pt-6 pb-8 w-full max-w-md"
-          onSubmit={(e) => {
-            e.preventDefault();
-            Handlelogincli(email, password);
-          }}
-        >
-          <h1 className="text-5xl font-semibold text-center text-gray-800 mb-6">
-            Iniciar Sesión
-          </h1>
+    <>
+      {loading ? (
+        <LoadingSp mensaje="Entrando al panel" />
+      ) : (
+        <div className="flex w-full h-screen">
+          <div className="w-full flex items-center justify-center lg:w-1/2">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                Handlelogincli(email, password);
+              }}
+              className="bg-white shadow-lg rounded-2xl px-6 py-6 w-full max-w-md"
+            >
+              <h1 className="text-3xl font-semibold text-center text-gray-800">
+                Iniciar sesión
+              </h1>
 
-          <p className="font-medium text-lg text-gray-500 mt-4">
-            Bienvenido devuelta, introduce tus credenciales
-          </p>
+              <p className="text-sm text-gray-500 text-center mt-2 mb-6">
+                Bienvenido de vuelta, ingresa tus credenciales
+              </p>
 
-          <div className="mt-7">
-            <label className="text-lg font-medium">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent mb-4"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+              {/* Email */}
+              <label className="text-sm font-medium">Email</label>
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-4 text-sm"
+              />
 
-            <label className="text-lg font-medium">Contraseña</label>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              className="w-full border-2 border-gray-100 rounded-2xl p-4 mt-1 bg-transparent"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+              {/* Password */}
+              <label className="text-sm font-medium">Contraseña</label>
+              <input
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full border border-gray-200 rounded-xl p-3 mt-1 mb-4 text-sm"
+              />
 
-            <div className="flex mt-5 gap-4">
-              <button className="font-medium text-base text-cyan-500 cursor-pointer">
-                Recuperar tu contraseña
-              </button>
+              {/* Links */}
+              <div className="flex justify-between text-sm text-gray-500 mb-5">
+                <Link to="" className="text-primary">
+                  ¿Olvidaste tu contraseña?
+                </Link>
 
-              <div className="flex">
-                <p>No tienes cuenta?</p>
-                <button className="font-medium text-base text-cyan-500 cursor-pointer">
-                  sing up
-                </button>
+                <Link to="/client/register" className="text-primary">
+                  Crear cuenta
+                </Link>
               </div>
-            </div>
 
-            <div className="mt-6 flex flex-col gap-y-4">
+              {/* Buttons */}
               <button
                 type="submit"
-                className="active:scale-[.98] active:duration-75 transition-all font-bold w-full 
-                  bg-cyan-500 rounded-xl text-white text-lg py-3 hover:scale-[1.01] ease-in-out cursor-pointer"
+                className="w-full bg-primary text-white rounded-xl py-2.5 text-sm font-semibold
+                           hover:bg-amber-500 transition active:scale-95"
               >
-                Sign in
+                Iniciar sesión
               </button>
 
               <button
-                className="flex items-center justify-center gap-3 w-full py-3 border-2 border-gray-300 rounded-xl 
-                font-medium text-gray-700 transition-all duration-200 hover:scale-[1.02] 
-                hover:bg-gray-50 active:scale-95 shadow-sm hover:shadow-md cursor-pointer"
+                type="button"
                 onClick={handleGoogleLogin}
+                className="mt-3 flex items-center justify-center gap-2 w-full py-2.5
+                           border border-gray-300 rounded-xl text-sm hover:bg-gray-50"
               >
                 <FaGoogle />
                 Continuar con Google
               </button>
-            </div>
+            </form>
           </div>
-        </form>
-      </div>
-
-      <div className="hidden relative lg:flex h-full w-1/2 items-center justify-center bg-gray-200">
-        <div className="w-60 h-60 bg-linear-to-tr from-cyan-500 to-pink-500 rounded-full animate-spin" />
-        <div className="w-full h-1/2 absolute bg-white/10 bottom-0 backdrop-blur-lg" />
-      </div>
-    </div>
+          <Ball />
+        </div>
+      )}
+    </>
   );
 }
