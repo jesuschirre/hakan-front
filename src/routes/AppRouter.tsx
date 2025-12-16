@@ -13,6 +13,9 @@ import Profile from "../pages/clientes/panel_client/pages/Profile";
 import LoginEm from "../pages/empresa_afiliada/auth/LoginEm";
 // importar vistas de Hakan
 import LoginHakan from "../pages/empresa_hakan/auth/LoginHakan";
+// vista de errores 
+import Error403 from "../components/error403";
+import Error404 from "../components/error404";
 
 export default function AppRouter() {
   return (
@@ -36,6 +39,9 @@ export default function AppRouter() {
       {/*vistas de Hakan */}
       <Route path="/hakan/login" element={<LoginHakan/>}/>   
 
+      {/* vista de errores */}
+      <Route path="/403" element={<Error403/>}/>
+      <Route path="*" element={<Error404/>}/>
     </Routes>
   );
 }

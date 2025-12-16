@@ -1,8 +1,8 @@
 import { useState, useEffect, type ReactNode } from "react";
-import axios from "axios";
 import API_URL from "../../services/Api";
 import { AuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import { createAxiosInstance } from "../../services/axios";
 
 interface Usuario {
   name: string;
@@ -14,13 +14,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const axiosAuth = createAxiosInstance(navigate);
 
   // 🔐 OBTENER USUARIO LOGUEADO
   const fetchUsuario = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/me`,
-        { withCredentials: true }
+      const response = await axiosAuth.get(
+        `${API_URL}/api/me`
       );
       setUsuario(response.data); // ✅ correcto
     } catch {
@@ -36,10 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const Handlelogincli = async (email: string, password: string) => {
     try {
       setLoading(true);
-      await axios.post(
+      await axiosAuth.post(
         `${API_URL}/api/login`,
-        { email, password },
-        { withCredentials: true }
+        { email, password }
       );
 
       await fetchUsuario(); // ✅ ACTUALIZA EL CONTEXTO
@@ -76,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     setLoading(true);
     try {
-      await axios.post(
+      await axiosAuth.post(
         `${API_URL}/api/register`,
         {
           name,
@@ -86,7 +85,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           identification_type_code,
           number
         },
-        { withCredentials: true }
       );
 
       // ✅ ACTUALIZAR CONTEXTO
@@ -106,10 +104,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 🚪 LOGOUT
   const logout = async () => {
-    await axios.post(
+    await axiosAuth.post(
       `${API_URL}/api/logout`,
-      {},
-      { withCredentials: true }
+      {}
     );
     setUsuario(null);
   };
