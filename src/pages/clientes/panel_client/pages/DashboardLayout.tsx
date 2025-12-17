@@ -163,8 +163,9 @@ export default function DashboardLayout() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Admin</p>
               </div>
               <img
-                src={usuario?.avatar} // Imagen de mayor calidad
+                src={usuario?.avatar}
                 alt="Avatar"
+                referrerPolicy="no-referrer"
                 className="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-slate-600 object-cover shadow-sm"
               />
             </div>
