@@ -10,13 +10,14 @@ import { RiDashboardFill } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "../../../../hooks/useAuth";
 import { CreditCard } from "lucide-react";
-
+import LoadingSp from "../../../../components/LoadingSp";
 
 export default function DashboardLayout() {
   const location = useLocation(); // Hook para saber en qué ruta estamos
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const {usuario} = useAuth();
+  const {logout, loading} = useAuth();
   // Agregamos iconos a los datos
   const vistas = [
     { name: "Inicio", path: "/client/dashboard", icon: <FaHome /> },
@@ -28,8 +29,11 @@ export default function DashboardLayout() {
   ];
 
   return (
-    // Contenedor principal: gestiona la clase 'dark' para todo el layout
-    <div className={`flex h-screen overflow-hidden transition-colors duration-300 ${darkMode ? "dark bg-slate-900" : ""}`}>
+    <>
+    {loading ? (
+            <LoadingSp mensaje="saliendo del panel" />
+    ) : (
+      <div className={`flex h-screen overflow-hidden transition-colors duration-300 ${darkMode ? "dark bg-slate-900" : ""}`}>
       
       {/* OVERLAY MOBILE: Fondo oscuro cuando el menú está abierto en móvil */}
       {sidebarOpen && (
@@ -95,7 +99,9 @@ export default function DashboardLayout() {
 
         {/* Footer Sidebar (Opcional) */}
         <div className="p-4 text-xs text-center text-slate-400 dark:text-slate-600 border-t dark:border-slate-700">
-              <button
+              <Link
+                to={"/client/login"}
+                onClick={logout}
                 className="
                   flex items-center gap-2
                   px-4 py-2
@@ -112,7 +118,7 @@ export default function DashboardLayout() {
               >
                 <FiLogOut className="text-lg" />
                 Cerrar sesión
-              </button>
+              </Link>
         </div>
       </aside>
 
@@ -172,7 +178,9 @@ export default function DashboardLayout() {
           </div>
         </main>
       </div>
-
     </div>
+    )}
+  </>
+  
   );
 }

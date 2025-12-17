@@ -23,7 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await axiosAuth.get(
         `${API_URL}/api/me`
       );
-      setUsuario(response.data); // ✅ correcto
+      setUsuario(response.data.user); // ✅ correcto
     } catch {
       setUsuario(null);
     } 
@@ -105,11 +105,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 🚪 LOGOUT
   const logout = async () => {
-    await axiosAuth.post(
-      `${API_URL}/api/logout`,
-      {}
-    );
-    setUsuario(null);
+    try {
+      setLoading(true)
+       await axiosAuth.post(
+        `${API_URL}/api/logout`,
+      );
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+
+      setUsuario(null);
+    } catch (error) {
+      console.log(error)
+    }   
   };
 
   return (
