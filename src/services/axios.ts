@@ -10,12 +10,7 @@ export const createAxiosInstance = (navigate: NavigateFunction) => {
     (response) => response,
     (error) => {
       const status = error.response?.status;
-
-      if (status === 401) {
-        // No autenticado → login
-        navigate("/client/login");
-      }
-
+      
       if (status === 403) {
         // Sin permisos → 403
         navigate("/403");

@@ -1,32 +1,22 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 // Importamos iconos más modernos y variados
-import { FaRegMoon, FaHome, FaUser, FaStar  } from "react-icons/fa";
-import { MdOutlineAddHomeWork } from "react-icons/md";
-import { FaArrowRight } from "react-icons/fa6";
+import { FaRegMoon, FaHome, FaUser } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
 import { HiMenuAlt2, HiX } from "react-icons/hi"; // Iconos para menú hamburguesa
 import { RiDashboardFill } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
-import { useAuth } from "../../../../hooks/useAuth";
-import { CreditCard } from "lucide-react";
 
-
-export default function DashboardLayout() {
+export default function DashLotoutRubro() {
   const location = useLocation(); // Hook para saber en qué ruta estamos
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const {usuario} = useAuth();
-  // Agregamos iconos a los datos
-  const vistas = [
-    { name: "Inicio", path: "/client/dashboard", icon: <FaHome /> },
-    { name: "Perfil y Seguridad", path: "/client/dashboard/profile", icon: <FaUser /> },
-    { name: "Solicitud de Tecnicos", path: "/client/dashboard/solicitud", icon: <MdOutlineAddHomeWork /> },
-    { name: "Seguimiento de Solicitud", path: "/client/dashboard/solicitud_Seguimiento", icon: <FaArrowRight /> },
-    { name: "Pagos", path: "/client/dashboard/pagos", icon: <CreditCard/> },
-    { name: "Calificacion", path: "/client/dashboard/calificacion", icon: <FaStar/> }
-  ];
-
+      // Agregamos iconos a los datos
+      const vistas = [
+        { name: "Inicio", path: "/rubro/dashboard", icon: <FaHome /> },
+        { name: "Perfil", path: "/rubro/dashboard/configuracion", icon: <FaUser /> },
+      ];
+    
   return (
     // Contenedor principal: gestiona la clase 'dark' para todo el layout
     <div className={`flex h-screen overflow-hidden transition-colors duration-300 ${darkMode ? "dark bg-slate-900" : ""}`}>
@@ -153,11 +143,11 @@ export default function DashboardLayout() {
             {/* User Profile */}
             <div className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-200 leading-none">{usuario?.name}</p>
+                <p className="text-sm font-bold text-slate-700 dark:text-slate-200 leading-none">xd</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Admin</p>
               </div>
               <img
-                src={usuario?.avatar} // Imagen de mayor calidad
+                src="https://static.vecteezy.com/system/resources/thumbnails/036/324/852/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg"// Imagen de mayor calidad
                 alt="Avatar"
                 className="w-10 h-10 rounded-full border-2 border-slate-200 dark:border-slate-600 object-cover shadow-sm"
               />
@@ -174,5 +164,5 @@ export default function DashboardLayout() {
       </div>
 
     </div>
-  );
+  )
 }

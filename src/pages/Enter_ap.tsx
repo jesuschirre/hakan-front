@@ -4,8 +4,8 @@ export default function Enter_ap() {
     { id: 1, label: "Cliente", color: "blue", path: "/client/main" },
     { id: 2, label: "Técnico", color: "green", path: "/company/login" },
     { id: 3, label: "Afiliado", color: "yellow", path: "/company/login" },
-    { id: 4, label: "Administrador", color: "red", path: "/hakan/login" },
-    { id: 4, label: "Colaborador", color: "red", path: "/hakan/login" }
+    { id: 4, label: "Administrador", color: "red", path: "/rubro/login" },
+    { id: 4, label: "Colaborador", color: "red", path: "/rubro/login" }
   ];
 
   return (
