@@ -6,6 +6,7 @@ import { IoMdSunny } from "react-icons/io";
 import { HiMenuAlt2, HiX } from "react-icons/hi"; // Iconos para menú hamburguesa
 import { RiDashboardFill } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
+import { IoIosSettings } from "react-icons/io";
 
 export default function DashLotoutRubro() {
   const location = useLocation(); // Hook para saber en qué ruta estamos
@@ -14,7 +15,7 @@ export default function DashLotoutRubro() {
       // Agregamos iconos a los datos
       const vistas = [
         { name: "Inicio", path: "/rubro/dashboard", icon: <FaHome /> },
-        { name: "Perfil", path: "/rubro/dashboard/configuracion", icon: <FaUser /> },
+        { name: "Configuración", path: "/rubro/dashboard/configuracion", icon: <IoIosSettings /> },
       ];
     
   return (
@@ -156,7 +157,7 @@ export default function DashLotoutRubro() {
         </header>
 
         {/* CONTENIDO DINÁMICO (Outlet) */}
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-slate-50 dark:bg-slate-900 scroll-smooth">
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-[#ebebea] dark:bg-slate-900 scroll-smooth">
           <div className=" mx-auto animate-fadeIn">
             <Outlet />
           </div>

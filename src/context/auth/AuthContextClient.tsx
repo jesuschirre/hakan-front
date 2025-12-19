@@ -14,6 +14,8 @@ interface Usuario {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [loading, setLoading] = useState(false);
+  const [panels, setPanels] = useState<string[]>([]);
+  const [activePanel, setActivePanel] = useState<string>("");
   const navigate = useNavigate();
   const axiosAuth = createAxiosInstance(navigate);
 
@@ -24,6 +26,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         `${API_URL}/api/me`
       );
       setUsuario(response.data.user); // ✅ correcto
+      setPanels(response.data.panels);
+      setActivePanel(response.data.active_panel)
     } catch {
       setUsuario(null);
     } 
@@ -122,7 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ usuario, loading, Handlelogincli, logout, handleGoogleLogin, handleregistercli }}
+      value={{ usuario, loading, panels, activePanel,  Handlelogincli, logout, handleGoogleLogin, handleregistercli }}
     >
       {children}
     </AuthContext.Provider>

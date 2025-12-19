@@ -26,6 +26,7 @@ export default function Profile() {
               <img
                 src={usuario?.avatar} // Imagen de mayor calidad
                 alt="Avatar"
+                referrerPolicy="no-referrer"
               />
             </div>
             <button className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md border border-slate-100 text-slate-500 hover:text-blue-600 transition-colors">
@@ -135,7 +136,7 @@ export default function Profile() {
                   <button className="text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
                     <LogOut size={18} />
                   </button>
-                </div>
+                </div> 
               </div>
             </div>
           </div>

@@ -10,6 +10,8 @@ interface Usuario {
 interface AuthContextType {
   usuario: Usuario | null;
   loading: boolean;
+  activePanel:string;
+  panels: string[];
   Handlelogincli: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   handleGoogleLogin: () => void;

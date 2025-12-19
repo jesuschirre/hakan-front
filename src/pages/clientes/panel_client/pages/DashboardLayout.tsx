@@ -16,8 +16,7 @@ export default function DashboardLayout() {
   const location = useLocation(); // Hook para saber en qué ruta estamos
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const {usuario} = useAuth();
-  const {logout, loading} = useAuth();
+  const {logout, loading, usuario, panels, activePanel} = useAuth();
   // Agregamos iconos a los datos
   const vistas = [
     { name: "Inicio", path: "/client/dashboard", icon: <FaHome /> },
@@ -31,7 +30,7 @@ export default function DashboardLayout() {
   return (
     <>
     {loading ? (
-            <LoadingSp mensaje="saliendo del panel" />
+            <LoadingSp mensaje="asdasd"/>
     ) : (
       <div className={`flex h-screen overflow-hidden transition-colors duration-300 ${darkMode ? "dark bg-slate-900" : ""}`}>
       
