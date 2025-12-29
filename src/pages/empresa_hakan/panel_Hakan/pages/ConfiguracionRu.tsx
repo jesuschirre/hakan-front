@@ -109,7 +109,7 @@ export default function ConfiguracionRu() {
             <div className="space-y-4">
               <input
                 className="w-full border-2 p-3 rounded-lg focus:outline-none transition-all"
-                style={{ borderColor: colors.light, focusColor: colors.yellow }}
+                style={{ borderColor: colors.light }}
                 placeholder="Ej: Administrador"
                 value={newRoleName}
                 onChange={(e) => setNewRoleName(e.target.value)}
@@ -191,7 +191,7 @@ export default function ConfiguracionRu() {
                     <div className="relative flex items-center">
                       <input
                         type="checkbox"
-                        className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded border-2"
+                        className="peer h-5 w-5 cursor-pointer transition-all rounded "
                         style={{ borderColor: colors.gray }}
                         checked={selectedPermissions.includes(p.name)}
                         onChange={() => togglePermission(p.name)}

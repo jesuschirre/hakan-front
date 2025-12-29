@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -6,47 +6,49 @@ import {
   type ColumnDef,
 } from "@tanstack/react-table";
 // Instalación: npm install lucide-react
-import { Edit3, Plus, X, UserCheck } from "lucide-react";
-import Form_Empresa from "../../components/Form_Empresa";
+import { Edit3, Plus, X, UserCheck, Trash  } from "lucide-react";
+
+import axios from "axios";
+import API_URL from "../../../../../services/Api";
 /* =======================
    Interfaces e Interfaces
 ======================= */
-interface Solicitud {
+
+interface Companies {
   id: number;
-  cliente: string;
-  servicio: string;
-  estado: "Pendiente" | "Asignado";
-  fecha: string;
-}
+  name:string;
+  ruc:string;
+  status:string;
+  email:string;
+} 
 
-interface Tecnico {
-  id: number;
-  nombre: string;
-}
-
-const solicitudesData: Solicitud[] = [
-  { id: 1, cliente: "Juan Pérez", servicio: "Reparación de laptop", estado: "Pendiente", fecha: "2025-01-10" },
-  { id: 2, cliente: "Ana Torres", servicio: "Instalación de software", estado: "Asignado", fecha: "2025-01-11" },
-];
-
-const tecnicosData: Tecnico[] = [
-  { id: 1, nombre: "Carlos Ruiz" },
-  { id: 2, nombre: "María López" },
-  { id: 3, nombre: "Pedro Sánchez" },
-];
-
-export default function SoliTec() {
+export default function CompanyList() {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedSolicitud, setSelectedSolicitud] = useState<Solicitud | null>(null);
   const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState("");
+  const [companies, setCompanies] = useState<Companies[] >([]);
 
-  const columns: ColumnDef<Solicitud, any>[] = [
-    { header: "Cliente", accessorKey: "cliente" },
-    { header: "Servicio", accessorKey: "servicio" },
-    { header: "Fecha", accessorKey: "fecha" },
+  console.log(companies)
+
+  const GetCompanies = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/rubro/companies`, { withCredentials: true })
+      setCompanies(res.data.data); // 👈 aquí llega todo
+    } catch (error:any) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    GetCompanies()
+  },[])
+
+  const columns: ColumnDef<Companies, any>[] = [
+    { header: "id", accessorKey: "id" },
+    { header: "Nombre", accessorKey: "name" },
+    { header: "ruc", accessorKey: "ruc" },
+    { header: "email", accessorKey: "email", cell: ({ getValue }) => getValue() ?? "N/A"},
     {
       header: "Estado",
-      accessorKey: "estado",
+      accessorKey: "status",
       cell: (info) => {
         const isPendiente = info.getValue() === "Pendiente";
         return (
@@ -61,22 +63,27 @@ export default function SoliTec() {
     {
       header: "Acciones",
       cell: ({ row }) => (
-        <button
-          onClick={() => {
-            setSelectedSolicitud(row.original);
-            setOpenModal(true);
-          }}
-          className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors group"
-          title="Asignar Técnico"
-        >
-          <Edit3 size={18} className="group-hover:scale-110 transition-transform" />
-        </button>
+        <div>
+          <button
+            className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors group"
+            title="Asignar Técnico"
+          >
+            <Edit3 size={18} className="group-hover:scale-110 transition-transform" />
+          </button>
+          <button
+            className="p-2 text-slate-400 hover:text-red-500 hover:bg-blue-50 rounded-lg transition-colors group"
+            title="Asignar Técnico"
+          >
+            <Trash  size={18} className="group-hover:scale-110 transition-transform" />
+          </button>
+        </div>
+        
       ),
     },
   ];
 
   const table = useReactTable({
-    data: solicitudesData,
+    data: companies,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getRowId: (row) => row.id.toString(),
@@ -95,8 +102,8 @@ export default function SoliTec() {
         {/* Header con Botón de Acción */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Solicitudes de Servicio</h1>
-            <p className="text-slate-500 text-sm">Gestiona y asigna técnicos a los pedidos entrantes.</p>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Empresas</h1>
+            <p className="text-slate-500 text-sm">Gestiona las empresas afiliadas.</p>
           </div>
           <button 
             onClick={() => setOpenModal(true)}
@@ -167,7 +174,6 @@ export default function SoliTec() {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  Seleccionar Técnico para {selectedSolicitud?.cliente}
                 </label>
                 <select
                   value={tecnicoSeleccionado}
@@ -176,9 +182,7 @@ export default function SoliTec() {
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-slate-600 outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none cursor-pointer"
                 >
                   <option value="">Elegir de la lista...</option>
-                  {tecnicosData.map((tec) => (
-                    <option key={tec.id} value={tec.nombre}>{tec.nombre}</option>
-                  ))}
+   
                 </select>
               </div>
 
@@ -201,7 +205,6 @@ export default function SoliTec() {
           </div>
         </div>
       )}
-      <Form_Empresa/>
     </div>
   );
 }

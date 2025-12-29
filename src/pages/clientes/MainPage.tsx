@@ -4,6 +4,7 @@ import Features from "./components/Features";
 import Testimonials from "./components/Testimonials";
 import Cta from "./components/Cta";
 import Footer from "./components/Footer";
+import Form_Empresa from "./components/Form_Empresa";
 const Index = () => {
 
   return (
@@ -13,7 +14,8 @@ const Index = () => {
       <Features/>
       <Testimonials/>
       <Cta/>
-      <Footer/>      
+      <Form_Empresa/>
+      <Footer/> 
     </div>
   );
 };

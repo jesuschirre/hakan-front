@@ -1,4 +1,11 @@
+import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
+
 export default function LoginHakan() {
+  const { Handlelogincli } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="flex w-full h-screen bg-[#E8E6DF]">
       {/* Sección del Formulario */}
@@ -12,7 +19,12 @@ export default function LoginHakan() {
           <span className="font-bold text-gray-800 tracking-tighter">RUBRO</span>
         </div>
 
-        <form className="w-full max-w-md">
+        <form
+          onSubmit={(e) => {
+                e.preventDefault();
+                Handlelogincli(email, password, "/rubro/dashboard");
+              }}
+          className="w-full max-w-md">
           <div className="text-center mb-10">
             <h1 className="text-4xl font-bold text-text">
               Acceso Administración
@@ -27,6 +39,9 @@ export default function LoginHakan() {
               <input
                 type="email"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => {setEmail(e.target.value)}}
+                required
                 className="w-full border border-gray-400 rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-primary transition-all shadow-sm"
               />
             </div>
@@ -35,6 +50,8 @@ export default function LoginHakan() {
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => {setPassword(e.target.value)}}
                 className="w-full border border-gray-400 rounded-full p-4  focus:outline-none focus:ring-2 focus:ring-primary transition-all shadow-sm"
               />
 

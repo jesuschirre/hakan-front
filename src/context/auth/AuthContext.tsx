@@ -12,7 +12,7 @@ interface AuthContextType {
   loading: boolean;
   activePanel:string;
   panels: string[];
-  Handlelogincli: (email: string, password: string) => Promise<void>;
+  Handlelogincli: (email: string, password: string, Navigate: string) => Promise<void>;
   logout: () => Promise<void>;
   handleGoogleLogin: () => void;
   handleregistercli: (

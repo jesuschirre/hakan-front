@@ -1,7 +1,7 @@
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
-import Ball from "../components/ball";
+import Ball from "../components/Ball";
 import { Link } from "react-router-dom";
 import LoadingSp from "../../../components/LoadingSp";
 
@@ -16,11 +16,11 @@ export default function LoginCli() {
         <LoadingSp mensaje="Entrando al panel" />
       ) : (
         <div className="flex w-full h-screen">
-          <div className="w-full flex items-center justify-center lg:w-1/2">
+          <div className="w-full flex items-center justify-center l g:w-1/2">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                Handlelogincli(email, password);
+                Handlelogincli(email, password, "/client/dashboard");
               }}
               className="bg-white shadow-lg rounded-2xl px-6 py-6 w-full max-w-md"
             >
